@@ -3,7 +3,7 @@
     <section class="todoapp">
         <header class="header">
             <h1>{{ title }}</h1>
-            <input class="new-todo" placeholder="What needs to be done?" autofocus>
+            <input class="new-todo" placeholder="What needs to be done?" @keyup.enter="createTodo" autofocus>
         </header>
 
         <!-- This section should be hidden by default and shown when there are todos -->
@@ -21,10 +21,10 @@
                     </div>
                     <input class="edit" value="Create a TodoMVC template">
                 </li>
-                <li>
+                <li v-for="todo in todos" :class="{ completed: todo.isDone }">
                     <div class="view">
                         <input class="toggle" type="checkbox">
-                        <label>Buy a unicorn</label>
+                        <label>{{ todo.text }}</label>
                         <button class="destroy"></button>
                     </div>
                     <input class="edit" value="Rule the web">
@@ -67,8 +67,20 @@ export default {
   name: 'todo',
   data() {
       return {
-        title: 'Hello!',
+        title: 'Todo Demo',
+          todos: [
+              { text: 'Learn JavaScript ES6+ goodies', isDone: true },
+              { text: 'Learn Vue', isDone: false },
+              { text: 'Build something awesome', isDone: false },
+          ]
       }
   },
+    methods: {
+        createTodo(event) {
+            const textbox = event.target;
+            this.todos.push({ text: textbox.value, isDone: false});
+            textbox.value = '';
+        }
+    }
 }
 </script>
