@@ -25,7 +25,7 @@
                     <div class="view">
                         <input class="toggle" type="checkbox" v-model="todo.isDone">
                         <label @dblclick="startEditing(idx)">{{ todo.text }}</label>
-                        <button class="destroy" @click=""></button>
+                        <button class="destroy" @click="destroyTodo(idx)"></button>
                     </div>
 <!--                    <input class="edit"-->
 <!--                           @keyup.esc="cancelEditing"-->
@@ -102,10 +102,9 @@ export default {
     // cancelEditing() {
     //   this.editing = null;
     // },
-    // destroyTodo(todo) {
-    //   const index = this.$store.state.todos.indexOf(todo);
-    //   this.$store.state.todos.splice(index, 1);
-    // },
+    destroyTodo(idx) {
+      this.$store.commit('deleteTodo', idx);
+    },
     clearCompleted() {
       this.$store.commit('clearCompleted');
     },

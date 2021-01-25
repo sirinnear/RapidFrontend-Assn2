@@ -21,6 +21,9 @@ export default new Vuex.Store({
     //   state.todos[idx] = { text: newText, ...state.todos[idx] };
     //   console.log(state.todos[idx].text);
     // },
+    deleteTodo(state, idx) {
+      return state.todos.splice(idx, 1);
+    },
     clearCompleted(state) {
       state.todos = state.todos.filter((todo) => !todo.isDone);
     },
