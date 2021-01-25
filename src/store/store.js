@@ -18,8 +18,7 @@ export default new Vuex.Store({
       return state.todos.push({ text, isDone: false });
     },
     editTodo(state, idx, newText) {
-      state.todos[idx] = { text: newText, ...state.todos[idx] };
-      console.log(state.todos[idx].text);
+      state.todos[idx].text = newText;
     },
     deleteTodo(state, idx) {
       return state.todos.splice(idx, 1);

@@ -121,12 +121,12 @@ export default {
     },
   },
   watch: {
-    // todos: {
-    //   deep: true,
-    //   handler(newValue) {
-    //     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newValue));
-    //   },
-    // },
+    todos: {
+      deep: true,
+      handler(newValue) {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newValue));
+      },
+    },
   },
 };
 </script>
