@@ -21,18 +21,18 @@
 <!--                    </div>-->
 <!--                    <input class="edit" value="Create a TodoMVC template">-->
 <!--                </li>-->
-                <li v-for="(todo, idx) in allTodos" :class="{ completed: getDoneStatus(idx), editing: idx === editing}">
+                <li v-for="(todo, idx) in allTodos" :class="{ completed: todo.isDone, editing: idx === editing}">
                     <div class="view">
                         <input class="toggle" type="checkbox" v-model="todo.isDone">
                         <label @dblclick="startEditing(idx)">{{ todo.text }}</label>
                         <button class="destroy" @click="destroyTodo(idx)"></button>
                     </div>
-<!--                    <input class="edit"-->
-<!--                           @keyup.esc="cancelEditing"-->
-<!--                           @keyup.enter="finishEditing"-->
-<!--                           @blur="finishEditing"-->
-<!--                           :value="todo.text"-->
-<!--                    >-->
+                    <input class="edit"
+                           @keyup.esc="cancelEditing"
+                           @keyup.enter="finishEditing"
+                           @blur="finishEditing"
+                           :value="todo.text"
+                    >
                 </li>
             </ul>
         </section>
@@ -89,27 +89,24 @@ export default {
       this.$store.commit('createTodo', textbox.value.trim());
       textbox.value = '';
     },
-    // startEditing(idx) {
-    //   this.editing = idx;
-    // },
-    // finishEditing(event) {
-    //   if (!this.editing) { return; }
-    //   const textbox = event.target;
-    //   this.$store.commit('editTodo', this.editing, textbox.value.trim());
-    //   console.log(this.$store.state.todos);
-    //   this.editing = null;
-    // },
-    // cancelEditing() {
-    //   this.editing = null;
-    // },
+    startEditing(idx) {
+      this.editing = idx;
+    },
+    finishEditing(event) {
+      if (!this.editing) { return; }
+      const textbox = event.target;
+      this.$store.commit('editTodo', this.editing, textbox.value.trim());
+      console.log(this.$store.state.todos);
+      this.editing = null;
+    },
+    cancelEditing() {
+      this.editing = null;
+    },
     destroyTodo(idx) {
       this.$store.commit('deleteTodo', idx);
     },
     clearCompleted() {
       this.$store.commit('clearCompleted');
-    },
-    getDoneStatus(idx) {
-      return this.$store.state.todos[idx].isDone;
     },
   },
   computed: {

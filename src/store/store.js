@@ -17,10 +17,10 @@ export default new Vuex.Store({
     createTodo(state, text) {
       return state.todos.push({ text, isDone: false });
     },
-    // editTodo(state, idx, newText) {
-    //   state.todos[idx] = { text: newText, ...state.todos[idx] };
-    //   console.log(state.todos[idx].text);
-    // },
+    editTodo(state, idx, newText) {
+      state.todos[idx] = { text: newText, ...state.todos[idx] };
+      console.log(state.todos[idx].text);
+    },
     deleteTodo(state, idx) {
       return state.todos.splice(idx, 1);
     },
