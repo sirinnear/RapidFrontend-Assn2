@@ -7,7 +7,7 @@
         </header>
 
         <!-- This section should be hidden by default and shown when there are todos -->
-        <section class="main" v-if="todos.length">
+        <section class="main" v-if="allTodos.length">
             <input id="toggle-all" class="toggle-all" type="checkbox">
             <label for="toggle-all">Mark all as complete</label>
             <ul class="todo-list">
@@ -21,25 +21,25 @@
 <!--                    </div>-->
 <!--                    <input class="edit" value="Create a TodoMVC template">-->
 <!--                </li>-->
-                <li v-for="todo in todos" :class="{ completed: todo.isDone, editing: todo === editing}">
+                <li v-for="todo in allTodos" :class="{ completed: todo.isDone}">
                     <div class="view">
                         <input class="toggle" type="checkbox" v-model="todo.isDone">
-                        <label @dblclick="startEditing(todo)">{{ todo.text }}</label>
-                        <button class="destroy" @click="destroyTodo(todo)"></button>
+                        <label @dblclick="">{{ todo.text }}</label>
+                        <button class="destroy" @click=""></button>
                     </div>
-                    <input class="edit"
-                           @keyup.esc="cancelEditing"
-                           @keyup.enter="finishEditing"
-                           @blur="finishEditing"
-                           :value="todo.text"
-                    >
+<!--                    <input class="edit"-->
+<!--                           @keyup.esc="cancelEditing"-->
+<!--                           @keyup.enter="finishEditing"-->
+<!--                           @blur="finishEditing"-->
+<!--                           :value="todo.text"-->
+<!--                    >-->
                 </li>
             </ul>
         </section>
         <!-- This footer should hidden by default and shown when there are todos -->
-        <footer class="footer" v-if="todos.length">
+        <footer class="footer" v-if="allTodos.length">
             <!-- This should be `0 items left` by default -->
-            <span class="todo-count"><strong> {{ activeTodos.length }}</strong> item(s) left</span>
+<!--            <span class="todo-count"><strong> {{ activeTodos.length }}</strong> item(s) left</span>-->
             <!-- Remove this if you don't implement routing -->
             <ul class="filters">
                 <li>
@@ -53,7 +53,7 @@
                 </li>
             </ul>
             <!-- Hidden if no completed items are left ↓ -->
-            <button class="clear-completed" @click="clearCompleted()" v-show="completedTodos.length">Clear completed</button>
+<!--            <button class="clear-completed" @click="clearCompleted()" v-show="completedTodos.length">Clear completed</button>-->
         </footer>
     </section>
     <footer class="info">
@@ -68,62 +68,59 @@
 </template>
 
 <script>
-const LOCAL_STORAGE_KEY = 'todo-app-vue';
 
 export default {
   name: 'todo',
   data() {
     return {
       title: 'Todo Demo',
-      todos: JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [
-        { text: 'Learn JavaScript ES6+ goodies', isDone: true },
-        { text: 'Learn Vue', isDone: false },
-        { text: 'Build something awesome', isDone: false },
-      ],
       editing: null,
     };
   },
   methods: {
     createTodo(event) {
       const textbox = event.target;
-      this.todos.push({ text: textbox.value.trim(), isDone: false });
+      this.$store.commit('createTodo', textbox.value.trim());
       textbox.value = '';
     },
-    startEditing(todo) {
-      this.editing = todo;
-    },
-    finishEditing(event) {
-      if (!this.editing) { return; }
-      const textbox = event.target;
-      this.editing.text = textbox.value.trim();
-      this.editing = null;
-    },
-    cancelEditing() {
-      this.editing = null;
-    },
-    destroyTodo(todo) {
-      const index = this.todos.indexOf(todo);
-      this.todos.splice(index, 1);
-    },
-    clearCompleted() {
-      this.todos = this.activeTodos;
-    },
+    // startEditing(todo) {
+    //   this.editing = todo;
+    // },
+    // finishEditing(event) {
+    //   if (!this.editing) { return; }
+    //   const textbox = event.target;
+    //   this.editing.text = textbox.value.trim();
+    //   this.editing = null;
+    // },
+    // cancelEditing() {
+    //   this.editing = null;
+    // },
+    // destroyTodo(todo) {
+    //   const index = this.$store.state.todos.indexOf(todo);
+    //   this.$store.state.todos.splice(index, 1);
+    // },
+    // clearCompleted() {
+    //   this.$store.state.todos = this.activeTodos;
+    // },
   },
   computed: {
-    activeTodos() {
-      return this.todos.filter((t) => !t.isDone);
+    allTodos() {
+      return this.$store.state.todos;
     },
-    completedTodos() {
-      return this.todos.filter((t) => t.isDone);
-    },
+    // activeTodos() {
+    //   return this.$store.state.todos.filter((t) => !t.isDone);
+    // },
+    // completedTodos() {
+    //   return this.$store.state.todos.filter((t) => t.isDone);
+    // },
   },
   watch: {
-    todos: {
-      deep: true,
-      handler(newValue) {
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newValue));
-      },
-    },
+    // todos: {
+    //   deep: true,
+    //   handler(newValue) {
+    //     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newValue));
+    //   },
+    // },
   },
 };
 </script>

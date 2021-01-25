@@ -13,5 +13,9 @@ export default new Vuex.Store({
     ],
   },
   mutations: {
+    createTodo(state, text) {
+      console.log(text);
+      return state.todos.push({ text, isDone: false });
+    },
   },
 });
