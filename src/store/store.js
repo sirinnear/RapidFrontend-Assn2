@@ -11,11 +11,21 @@ export default new Vuex.Store({
       { text: 'Learn Vue', isDone: false },
       { text: 'Build something awesome', isDone: false },
     ],
+    editing: null,
   },
   mutations: {
     createTodo(state, text) {
-      console.log(text);
       return state.todos.push({ text, isDone: false });
     },
+    // editTodo(state, idx, newText) {
+    //   state.todos[idx] = { text: newText, ...state.todos[idx] };
+    //   console.log(state.todos[idx].text);
+    // },
+    clearCompleted(state) {
+      state.todos = state.todos.filter((todo) => !todo.isDone);
+    },
+    // taskDone(state, idx) {
+    //   state.todos[idx].isDone = true;
+    // },
   },
 });
