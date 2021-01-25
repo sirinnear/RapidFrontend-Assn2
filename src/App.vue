@@ -6,14 +6,14 @@
 </template>
 
 <script>
-import HelloWorld from './components/Todo.vue'
+import HelloWorld from './components/Todo.vue';
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
-  }
-}
+    HelloWorld,
+  },
+};
 </script>
 
 <style>
