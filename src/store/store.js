@@ -24,8 +24,8 @@ export default new Vuex.Store({
     clearCompleted(state) {
       state.todos = state.todos.filter((todo) => !todo.isDone);
     },
-    // taskDone(state, idx) {
-    //   state.todos[idx].isDone = true;
-    // },
+    getDoneStatus(state, idx) {
+      state.todos[idx].isDone = true;
+    },
   },
 });

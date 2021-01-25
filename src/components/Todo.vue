@@ -21,7 +21,7 @@
 <!--                    </div>-->
 <!--                    <input class="edit" value="Create a TodoMVC template">-->
 <!--                </li>-->
-                <li v-for="(todo, idx) in allTodos" :class="{ completed: todo.isDone, editing: idx === editing}">
+                <li v-for="(todo, idx) in allTodos" :class="{ completed: getDoneStatus(idx), editing: idx === editing}">
                     <div class="view">
                         <input class="toggle" type="checkbox" v-model="todo.isDone">
                         <label @dblclick="startEditing(idx)">{{ todo.text }}</label>
@@ -109,9 +109,9 @@ export default {
     clearCompleted() {
       this.$store.commit('clearCompleted');
     },
-    // taskDone(idx) {
-    //   this.$store.commit('taskDone', idx);
-    // },
+    getDoneStatus(idx) {
+      return this.$store.state.todos[idx].isDone;
+    },
   },
   computed: {
     allTodos() {
